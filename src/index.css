@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  --color-background: #f0f2ed;
+  --color-contrast: #6C7E11;
+  --color-border: #e8ebe5;
+  --color-inputBorder:#d1d5db;
+  --color-title: #1e293b;
+  --color-paragraph: #64748b;
+  --color-label:#1e293b;
+  --color-inputPlaceHolder:#9ca3af;
+  --color-inputText:#1e293b;
+  --color-passwordToggle:#64748b;
+  --color-buttonText: #64748b   
+  --color-linkHover: #5a6a0e;
+  --color-disabled:#d1d5db;
+  --color-divider:#e5e7eb;
+  --color-textBtnSocialMedia:#1e293b;
+  --color-BtnSocialMediaBorder:#d1d5db;
+  --color-BtnSocialMediaHover:#f8faf5;
+  --color-ErrorMessageBG:#fee2e2;
+  --color-ErrorMessageBorder:#fca5a5;
+  --color-ErrorMessageText:#991b1b;
+  --color-SuccessMessageBG:#f0f9ff;
+  --color-SuccessMessageText:#1e293b; 
+}
