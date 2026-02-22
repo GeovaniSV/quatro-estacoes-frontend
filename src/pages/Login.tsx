@@ -76,7 +76,14 @@ function Login() {
 				</div>
 			</div>
 
-			<div className="flex flex-col"></div>
+			<div className="bg-background flex w-1/2 items-center justify-center border">
+				<form
+					action=""
+					className="w-4/5 rounded-sm border bg-white p-10 shadow-lg">
+					<h1 className="text-inputText text-xl font-bold">Acessar Conta</h1>
+					<p>Entre com seus dados ou crie uma conta nova</p>
+				</form>
+			</div>
 		</main>
 	)
 }
