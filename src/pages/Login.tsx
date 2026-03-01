@@ -1,7 +1,7 @@
 import ButtonField from '../components/ui/ButtonField'
 import SocialButtonField from '../components/ui/SocialButtonField'
 import TextField from '../components/ui/TextField'
-import logo from '../../public/quatro_estacoes_logo.jpg'
+import logo from '/public/quatro_estacoes_logo.jpg'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
 
