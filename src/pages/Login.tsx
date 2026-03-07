@@ -4,12 +4,10 @@ import TextField from '../components/ui/TextField'
 import logo from '/quatro_estacoes_logo.jpg'
 import { useState, type ChangeEvent } from 'react'
 import { api } from '../services/api'
-import { useNavigate } from 'react-router-dom'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
 
 function Login() {
-	const navigate = useNavigate()
 	const [campButtons, setCampButtons] = useState(false)
 	const [loginInput, setLoginInput] = useState({
 		email: '',
