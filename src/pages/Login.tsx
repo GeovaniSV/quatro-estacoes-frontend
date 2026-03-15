@@ -4,9 +4,9 @@ import TextField from '../components/ui/TextField'
 import logo from '/quatro_estacoes_logo.jpg'
 import { useState, type ChangeEvent } from 'react'
 import { api } from '../services/api'
-import { useNavigate } from 'react-router-dom'
 
 import { ClockIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
 	const navigate = useNavigate()
@@ -23,16 +23,20 @@ function Login() {
 		fone: '',
 	})
 
-	const login = async () => {
+	const login = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
 		console.log(loginInput)
 		try {
-			console.log(loginInput)
 			const response = await api.post('/auth/login', {
 				email: loginInput.email,
 				password: loginInput.password,
 			})
 
-			console.log(response)
+			const token = response.data.userData.token
+
+			localStorage.setItem('token', token)
+
+			navigate('/home')
 		} catch (error) {
 			console.log(error)
 		}
@@ -289,6 +293,7 @@ function Login() {
 							/>
 
 							<ButtonField
+								type="submit"
 								title="Criar"
 								typeField="contrast"
 							/>
