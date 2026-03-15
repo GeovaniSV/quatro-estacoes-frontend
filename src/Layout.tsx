@@ -1,9 +1,15 @@
+import Header from './components/Header'
+import { Outlet } from 'react-router-dom'
+
 function Layout() {
-  return (
-    <div>
-      <h1>hi</h1>
-    </div>
-  );
+	return (
+		<main className="flex min-h-screen w-screen flex-col">
+			<Header />
+			<div className="flex flex-1 flex-col overflow-auto">
+				<Outlet />
+			</div>
+		</main>
+	)
 }
 
-export default Layout;
+export default Layout
