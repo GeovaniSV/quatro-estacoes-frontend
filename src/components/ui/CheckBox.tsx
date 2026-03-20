@@ -1,27 +1,33 @@
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { Checkbox } from '@headlessui/react'
 import { useState } from 'react'
 
-type CheckBoxProps = {
-	label: string
+type CheckBoxProp = {
+	label?: string
 }
 
-function CheckBox({ label }: CheckBoxProps) {
-	const [selected, setSelected] = useState(false)
+function CheckBox({ label }: CheckBoxProp) {
+	const [enabled, setEnabled] = useState(false)
+
 	return (
-		<div className="flex items-center gap-2">
-			<button
-				type="button"
-				onClick={() => setSelected(!selected)}
-				className={`flex h-6 w-6 items-center justify-center rounded-sm border ${
-					selected
-						? 'bg-contrast border-contrast/10'
-						: 'border-gray-300 bg-transparent'
-				}`}>
-				<CheckIcon
-					className={`size-4 font-bold text-white ${!selected && 'hidden'}`}
-				/>
-			</button>
-			<span className="text-title text-sm md:text-lg">{label}</span>
+		<div className="flex items-center gap-3">
+			<Checkbox
+				checked={enabled}
+				onChange={setEnabled}
+				className="group data-checked:bg-contrast block size-4 rounded border bg-white">
+				{/* Checkmark icon */}
+				<svg
+					className="stroke-white opacity-0 group-data-checked:opacity-100"
+					viewBox="0 0 14 14"
+					fill="none">
+					<path
+						d="M3 8L6 11L11 3.5"
+						strokeWidth={2}
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</Checkbox>
+			<span>{label}</span>
 		</div>
 	)
 }
