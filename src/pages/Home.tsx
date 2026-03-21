@@ -1,29 +1,24 @@
-import { useEffect, useState } from 'react'
-import ProductCard from '../components/ProductCard'
-import { api } from '../services/api'
-import type { ProductType } from '../types/ProductTypes'
 import CheckBox from '../components/ui/CheckBox'
 import ButtonField from '../components/ui/ButtonField'
+import ProductCard from '../components/ProductCard'
+import type { ProductType } from '../types/ProductTypes'
+import { useEffect } from 'react'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import { getProducts } from '../functions/ProductFunctions'
 
 function Home() {
-	const [products, setProducts] = useState<ProductType[]>([])
+	const queryClient = useQueryClient()
 
-	console.log(products.map((product) => product.product_name))
+	const { data, error, isPending } = useQuery({
+		queryKey: ['products'],
+		queryFn: getProducts,
+	})
 
+	console.log(data)
 	useEffect(() => {
-		const getProducts = async () => {
-			try {
-				const { data } = await api.get('/products?page=1&limit=10')
-
-				setProducts(data.data)
-				console.log(data)
-			} catch (error) {
-				console.log(error)
-			}
-		}
-
 		getProducts()
 	}, [])
+
 	return (
 		<main className="bg-background flex-1 p-5 lg:p-10">
 			<div className="gap-5 md:grid md:grid-cols-4">
@@ -48,20 +43,21 @@ function Home() {
 				<div className="col-span-3">
 					<div className="rounded-sm border border-gray-200 bg-white p-5 shadow-lg">
 						<h1 className="text-title text-sm font-bold md:text-lg">
-							{products.length} itens encontrados
+							itens encontrados
 						</h1>
 					</div>
 					<div className="mt-5 grid grid-cols-2 gap-5 lg:grid-cols-3">
-						{products.map((product) => (
-							<ProductCard
-								key={product.id}
-								id={product.id}
-								product_name={product.product_name}
-								product_description={product.product_description}
-								price_view={product.price_view}
-								image_public_id={product.image_public_id}
-							/>
-						))}
+						{!isPending &&
+							data.map((product: ProductType) => (
+								<ProductCard
+									key={product.id}
+									id={product.id}
+									product_name={product.product_name}
+									product_description={product.product_description}
+									price_view={product.price_view}
+									image_public_id={product.image_public_id}
+								/>
+							))}
 					</div>
 				</div>
 			</div>

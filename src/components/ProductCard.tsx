@@ -45,7 +45,7 @@ function ProductCard({
 						R$ {price_view}
 					</span>
 
-					<button className="bg-contrast hover:bg-contrast/90 w-2/5 rounded-sm p-1 text-xs text-white duration-200 ease-in-out md:p-2 md:text-lg">
+					<button className="bg-contrast hover:bg-contrast/90 w-2/5 cursor-pointer rounded-sm p-1 text-xs text-white duration-200 ease-in-out md:p-2 md:text-lg">
 						Detalhes
 					</button>
 				</div>
