@@ -9,15 +9,28 @@ import { getProducts } from '../functions/ProductFunctions'
 function Home() {
 	const queryClient = useQueryClient()
 
-	const { data, error, isPending } = useQuery({
+	const handleFilters = (target: string, value: string) => {
+		const filters: Record<string, string> = {
+			name: '',
+			min_price: '',
+			max_price: '',
+			page: '',
+			per_page: '',
+		}
+
+		let queryParams: string = ''
+
+		queryParams += `&${target}=${value}`
+
+		console.log(queryParams)
+	}
+
+	const { data, error, isLoading } = useQuery({
 		queryKey: ['products'],
 		queryFn: getProducts,
 	})
 
 	console.log(data)
-	useEffect(() => {
-		getProducts()
-	}, [])
 
 	return (
 		<main className="bg-background flex-1 p-5 lg:p-10">
@@ -28,10 +41,10 @@ function Home() {
 					<div className="flex flex-col gap-3">
 						<h2 className="text-title text-sm font-bold md:text-lg">Modelos</h2>
 						<div className="flex flex-col gap-2">
-							<CheckBox label="Estilo" />
-							<CheckBox label="Pilão" />
-							<CheckBox label="Vietnã" />
-							<CheckBox label="Copo" />
+							<CheckBox
+								label="Estilo"
+								onCheckChange={() => handleFilters('name', 'Estilo')}
+							/>
 						</div>
 					</div>
 					<ButtonField
@@ -47,17 +60,20 @@ function Home() {
 						</h1>
 					</div>
 					<div className="mt-5 grid grid-cols-2 gap-5 lg:grid-cols-3">
-						{!isPending &&
+						{isLoading ? (
+							<p>Carregando calma ai...</p>
+						) : (
 							data.map((product: ProductType) => (
 								<ProductCard
 									key={product.id}
 									id={product.id}
-									product_name={product.product_name}
-									product_description={product.product_description}
-									price_view={product.price_view}
-									image_public_id={product.image_public_id}
+									productName={product.productName}
+									productDescription={product.productDescription}
+									priceView={product.priceView}
+									imagePublicId={product.imagePublicId}
 								/>
-							))}
+							))
+						)}
 					</div>
 				</div>
 			</div>

@@ -1,18 +1,26 @@
-import { Checkbox } from '@headlessui/react'
+import { Checkbox, Field } from '@headlessui/react'
 import { useState } from 'react'
 
 type CheckBoxProp = {
 	label?: string
+	onCheckChange: (checked: boolean) => void
+	disabled?: boolean
 }
 
-function CheckBox({ label }: CheckBoxProp) {
+function CheckBox({ label, disabled, onCheckChange }: CheckBoxProp) {
 	const [enabled, setEnabled] = useState(false)
 
+	const handleChange = () => {
+		setEnabled(!enabled)
+		onCheckChange(enabled)
+	}
+
 	return (
-		<div className="flex items-center gap-3">
+		<Field className="flex items-center gap-3">
 			<Checkbox
+				disabled={disabled}
 				checked={enabled}
-				onChange={setEnabled}
+				onChange={handleChange}
 				className="group data-checked:bg-contrast block size-4 rounded border bg-white">
 				{/* Checkmark icon */}
 				<svg
@@ -28,7 +36,7 @@ function CheckBox({ label }: CheckBoxProp) {
 				</svg>
 			</Checkbox>
 			<span>{label}</span>
-		</div>
+		</Field>
 	)
 }
 

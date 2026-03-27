@@ -1,10 +1,16 @@
 type ProductType = {
 	id?: number
-	product_name: string
-	product_description: string
-	product_price?: number
-	price_view?: number
-	image_public_id: string
+	productName: string
+	productDescription: string
+	productPrice?: number
+	priceView?: number
+	imagePublicId: string
 }
 
-export type { ProductType }
+interface ProductFilters {
+	name?: string
+	min_price?: string
+	max_price?: string
+}
+
+export type { ProductType, ProductFilters }
