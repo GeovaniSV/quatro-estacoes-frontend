@@ -34,6 +34,7 @@ function Home() {
 		queryParams += `&${target}=${value}`
 
 		setFilters((prev) => ({
+			...prev,
 			[target]: checked ? value : '',
 		}))
 	}
