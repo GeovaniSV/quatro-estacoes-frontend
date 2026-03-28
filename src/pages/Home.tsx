@@ -2,31 +2,44 @@ import CheckBox from '../components/ui/CheckBox'
 import ButtonField from '../components/ui/ButtonField'
 import ProductCard from '../components/ProductCard'
 import type { ProductType } from '../types/ProductTypes'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { getProducts } from '../functions/ProductFunctions'
 
+interface Filters {
+	name?: string
+	min_price?: string
+	max_price?: string
+	page?: string
+	per_page?: string
+}
+
 function Home() {
 	const queryClient = useQueryClient()
+	const [Filters, setFilters] = useState<Filters>({
+		name: '',
+		min_price: '',
+		max_price: '',
+		page: '1',
+		per_page: '10',
+	})
 
-	const handleFilters = (target: string, value: string) => {
-		const filters: Record<string, string> = {
-			name: '',
-			min_price: '',
-			max_price: '',
-			page: '',
-			per_page: '',
-		}
-
+	const handleFilters = (
+		target: keyof Filters,
+		value: string,
+		checked: boolean,
+	) => {
 		let queryParams: string = ''
 
 		queryParams += `&${target}=${value}`
 
-		console.log(queryParams)
+		setFilters((prev) => ({
+			[target]: checked ? value : '',
+		}))
 	}
 
 	const { data, error, isLoading } = useQuery({
-		queryKey: ['products'],
+		queryKey: ['products', Filters],
 		queryFn: getProducts,
 	})
 
@@ -43,7 +56,9 @@ function Home() {
 						<div className="flex flex-col gap-2">
 							<CheckBox
 								label="Estilo"
-								onCheckChange={() => handleFilters('name', 'Estilo')}
+								onCheckChange={(checked) =>
+									handleFilters('name', 'Estilo', checked)
+								}
 							/>
 						</div>
 					</div>
@@ -71,6 +86,7 @@ function Home() {
 									productDescription={product.productDescription}
 									priceView={product.priceView}
 									imagePublicId={product.imagePublicId}
+									productLink={`/product/${product.id}`}
 								/>
 							))
 						)}

@@ -1,13 +1,18 @@
+import { Link } from 'react-router-dom'
 import type { ProductType } from '../types/ProductTypes'
 import { useEffect, useState } from 'react'
+
+type LinkType = {
+	productLink: string
+} & ProductType
 
 function ProductCard({
 	productName,
 	productDescription,
 	priceView,
 	imagePublicId,
-	productPrice,
-}: ProductType) {
+	productLink,
+}: LinkType) {
 	const [image, setImage] = useState<string>('')
 	useEffect(() => {
 		const handleImage = async (publicId: string) => {
@@ -44,9 +49,11 @@ function ProductCard({
 						R$ {priceView}
 					</span>
 
-					<button className="bg-contrast hover:bg-contrast/90 w-2/5 cursor-pointer rounded-sm p-1 text-xs text-white duration-200 ease-in-out md:p-2 md:text-lg">
+					<Link
+						to={productLink}
+						className="bg-contrast hover:bg-contrast/90 w-2/5 cursor-pointer rounded-sm p-1 text-xs text-white duration-200 ease-in-out md:p-2 md:text-lg">
 						Detalhes
-					</button>
+					</Link>
 				</div>
 			</div>
 		</main>

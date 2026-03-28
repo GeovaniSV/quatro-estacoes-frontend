@@ -12,7 +12,7 @@ function CheckBox({ label, disabled, onCheckChange }: CheckBoxProp) {
 
 	const handleChange = () => {
 		setEnabled(!enabled)
-		onCheckChange(enabled)
+		onCheckChange(!enabled)
 	}
 
 	return (

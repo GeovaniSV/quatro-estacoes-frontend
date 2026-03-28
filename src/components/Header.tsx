@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import TextField from './ui/TextField'
 import logo from '/quatro_estacoes_logo.jpg'
 
@@ -5,15 +6,17 @@ import { UserIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 
 function Header() {
 	return (
-		<header className="border-contrast bg-background/5 flex justify-between border-2 px-5 py-5 shadow-sm lg:px-16">
+		<header className="border-contrast bg-background/5 flex justify-between border-b-2 px-5 py-5 shadow-sm lg:px-16">
 			<div className="flex gap-5">
-				<div className="bg-contrast h-16 w-16 rounded-sm p-2 max-sm:hidden">
+				<Link
+					to={'/home'}
+					className="bg-contrast h-16 w-16 rounded-sm p-2 max-sm:hidden">
 					<img
 						src={logo}
 						alt="Logo 4 Estações"
 						className="h-full rounded-full"
 					/>
-				</div>
+				</Link>
 				<div className="max-sm:hidden">
 					<h1 className="text-inputText text-xl font-bold max-md:hidden">
 						4 Estações Vasos & Acessórios

@@ -6,10 +6,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Layout from './Layout'
+import ProductDetail from './pages/ProductDetail'
 
 const router = createBrowserRouter([
 	{ path: '/auth', element: <Login /> },
-	{ element: <Layout />, children: [{ path: '/home', element: <Home /> }] },
+	{
+		element: <Layout />,
+		children: [
+			{ path: '/home', element: <Home /> },
+			{ path: '/product/:id', element: <ProductDetail /> },
+		],
+	},
 	{ path: '/', element: <Navigate to={'/home'} /> },
 ])
 
