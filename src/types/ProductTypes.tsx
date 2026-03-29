@@ -8,7 +8,7 @@ type ProductType = {
 }
 
 interface ProductFilters {
-	name?: string
+	name?: string[]
 	min_price?: string
 	max_price?: string
 	page?: string
