@@ -29,12 +29,12 @@ function ProductCard({
 		handleImage(imagePublicId)
 	}, [])
 	return (
-		<main className="border-border h-auto max-w-50 rounded-sm border bg-white shadow-md duration-200 ease-in-out hover:scale-105 hover:shadow-lg md:max-w-xs">
+		<div className="border-border h-auto rounded-sm border bg-white shadow-md duration-200 ease-in-out hover:scale-105 hover:shadow-lg">
 			<div className="border-border w-full border-b">
 				<img
 					src={image}
 					alt="Foto do produto"
-					className="h-30 w-full md:h-60"
+					className="w-full object-cover"
 				/>
 			</div>
 			<div className="flex flex-col gap-2 p-5">
@@ -56,7 +56,7 @@ function ProductCard({
 					</Link>
 				</div>
 			</div>
-		</main>
+		</div>
 	)
 }
 

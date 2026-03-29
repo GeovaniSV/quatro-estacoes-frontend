@@ -11,6 +11,8 @@ interface ProductFilters {
 	name?: string
 	min_price?: string
 	max_price?: string
+	page?: string
+	per_page?: string
 }
 
 export type { ProductType, ProductFilters }
