@@ -14,7 +14,7 @@ function Header() {
 	})
 
 	// Terminar a combobox para procurar produtos por nome, apenas!
-	const { data, isError, isLoading } = useProducts(Filters)
+	const { data } = useProducts(Filters)
 
 	console.log(name, 'array: ', Filters)
 	console.log('data do header', data?.products)
