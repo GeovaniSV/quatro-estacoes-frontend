@@ -6,13 +6,14 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getProducts } from '../functions/ProductFunctions'
 import ButtonField from '../components/ui/ButtonField'
+import Pagination from '../components/Pagination'
 
 const options = [
 	{ id: 1, min_price: '', max_price: '', priceView: 'Todos os preços' },
 	{
 		id: 2,
-		min_price: '25',
-		max_price: '100',
+		min_price: '2500',
+		max_price: '10000',
 		priceView: 'R$25,00 - R$100,00',
 	},
 	{
@@ -42,7 +43,7 @@ function Home() {
 		min_price: '',
 		max_price: '',
 		page: '1',
-		per_page: '10',
+		per_page: '9',
 	})
 
 	const handleCheckBoxFilters = (
@@ -85,19 +86,39 @@ function Home() {
 		} as React.ChangeEvent<HTMLSelectElement>)
 	}
 
-	console.log(Filters)
-
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ['products', Filters],
 		queryFn: () => getProducts(Filters),
 	})
 
-	console.log(isError, isLoading, data)
+	const handlePagination = (page: number) => {
+		console.log('pagina selecionada', page)
+		setFilters((prev) => ({
+			...prev,
+			page: page.toString(),
+		}))
+	}
+
+	console.log('home data', data?.meta)
 
 	return (
-		<main className="bg-background flex-1 overflow-hidden p-5 lg:p-10">
-			<div className="items-start gap-5 md:grid md:grid-cols-4">
-				<div className="hidden bg-white p-5 md:block">
+		<main className="bg-background flex-1 p-5 lg:p-10">
+			<div className="border-b-contrast sticky top-0 left-1/2 z-10 flex justify-between rounded-sm border-2 border-gray-200 bg-white p-5 shadow-lg transition-all duration-500 ease-in-out">
+				<h1 className="text-title text-sm font-bold md:text-lg">
+					{data?.products.length} itens encontrados
+				</h1>
+
+				<Pagination
+					currentPage={data?.meta.currentPage}
+					firstPage={data?.meta.firstPage}
+					lastPage={data?.meta.lastPage}
+					perPage={data?.meta.perPage}
+					total={data?.meta.total || 0}
+					onPageChange={handlePagination}
+				/>
+			</div>
+			<div className="mt-5 items-start gap-5 md:flex">
+				<div className="hidden min-w-72 bg-white p-5 lg:block">
 					<h1 className="text-title font-bold md:text-lg">FILTROS</h1>
 					<hr className="border-contrast my-5 border-t-2" />
 					<div className="flex flex-col gap-3">
@@ -135,13 +156,8 @@ function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="col-span-3 min-w-0">
-					<div className="rounded-sm border border-gray-200 bg-white p-5 shadow-lg">
-						<h1 className="text-title text-sm font-bold md:text-lg">
-							itens encontrados
-						</h1>
-					</div>
-					<div className="mt-5 flex gap-5 overflow-hidden">
+				<div className="min-w-0">
+					<div className="flex gap-5">
 						{isError ? (
 							<div className="flex w-full flex-col items-center gap-5 border-gray-200 bg-white p-5 shadow-lg">
 								<h1 className="text-contrast text-2xl font-bold">
@@ -163,87 +179,17 @@ function Home() {
 							<p>Carregando calma ai...</p>
 						) : (
 							<>
-								{/* Mobile: 2 colunas */}
-								<div className="flex w-full gap-5 lg:hidden">
-									<div className="flex flex-1 flex-col gap-5">
-										{data
-											.filter((_: ProductType, i: number) => i % 2 === 0)
-											.map((product: ProductType) => (
-												<ProductCard
-													key={product.id}
-													id={product.id}
-													productName={product.productName}
-													productDescription={product.productDescription}
-													priceView={product.priceView}
-													imagePublicId={product.imagePublicId}
-													productLink={`/product/${product.id}`}
-												/>
-											))}
-									</div>
-									<div className="flex flex-1 flex-col gap-5">
-										{data
-											.filter((_: ProductType, i: number) => i % 2 === 1)
-											.map((product: ProductType) => (
-												<ProductCard
-													key={product.id}
-													id={product.id}
-													productName={product.productName}
-													productDescription={product.productDescription}
-													priceView={product.priceView}
-													imagePublicId={product.imagePublicId}
-													productLink={`/product/${product.id}`}
-												/>
-											))}
-									</div>
-								</div>
-
-								{/* Desktop: 3 colunas */}
-								<div className="hidden w-full gap-5 lg:flex">
-									<div className="flex flex-1 flex-col">
-										{data
-											.filter((_: ProductType, i: number) => i % 3 === 0)
-											.map((product: ProductType) => (
-												<ProductCard
-													key={product.id}
-													id={product.id}
-													productName={product.productName}
-													productDescription={product.productDescription}
-													priceView={product.priceView}
-													imagePublicId={product.imagePublicId}
-													productLink={`/product/${product.id}`}
-												/>
-											))}
-									</div>
-									<div className="flex flex-1 flex-col">
-										{data
-											.filter((_: ProductType, i: number) => i % 3 === 1)
-											.map((product: ProductType) => (
-												<ProductCard
-													key={product.id}
-													id={product.id}
-													productName={product.productName}
-													productDescription={product.productDescription}
-													priceView={product.priceView}
-													imagePublicId={product.imagePublicId}
-													productLink={`/product/${product.id}`}
-												/>
-											))}
-									</div>
-									<div className="flex flex-1 flex-col">
-										{data
-											.filter((_: ProductType, i: number) => i % 3 === 2)
-											.map((product: ProductType) => (
-												<ProductCard
-													key={product.id}
-													id={product.id}
-													productName={product.productName}
-													productDescription={product.productDescription}
-													priceView={product.priceView}
-													imagePublicId={product.imagePublicId}
-													productLink={`/product/${product.id}`}
-												/>
-											))}
-									</div>
+								<div className="grid grid-cols-2 items-start gap-5 lg:grid-cols-3">
+									{data?.products.map((product: ProductType) => (
+										<ProductCard
+											key={product.id}
+											productName={product.productName}
+											productDescription={product.productDescription}
+											priceView={product.priceView}
+											imagePublicId={product.imagePublicId}
+											productLink={`/product/${product.id}`}
+										/>
+									))}
 								</div>
 							</>
 						)}

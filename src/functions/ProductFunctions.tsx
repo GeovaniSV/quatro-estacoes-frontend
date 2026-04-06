@@ -18,7 +18,10 @@ export const getProducts = async (filters: ProductFilters) => {
 			params,
 		})
 
-		return data.data
+		return {
+			products: data.data,
+			meta: data.meta,
+		}
 	} catch (error) {
 		console.log(error)
 	}
