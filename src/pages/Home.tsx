@@ -3,10 +3,10 @@ import ProductCard from '../components/ProductCard'
 import { Field, Label, Select } from '@headlessui/react'
 import type { ProductType, ProductFilters } from '../types/ProductTypes'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { getProducts } from '../functions/ProductFunctions'
+
 import ButtonField from '../components/ui/ButtonField'
 import Pagination from '../components/Pagination'
+import { useProducts } from '../hooks/useProducts'
 
 const options = [
 	{ id: 1, min_price: '', max_price: '', priceView: 'Todos os preços' },
@@ -46,11 +46,7 @@ function Home() {
 		per_page: '9',
 	})
 
-	const handleCheckBoxFilters = (
-		target: keyof ProductFilters,
-		value: string,
-		checked: boolean,
-	) => {
+	const handleCheckBoxFilters = (value: string, checked: boolean) => {
 		setFilters((prev) => ({
 			...prev,
 			name: checked
@@ -86,10 +82,7 @@ function Home() {
 		} as React.ChangeEvent<HTMLSelectElement>)
 	}
 
-	const { data, isError, isLoading } = useQuery({
-		queryKey: ['products', Filters],
-		queryFn: () => getProducts(Filters),
-	})
+	const { data, isError, isLoading } = useProducts(Filters)
 
 	const handlePagination = (page: number) => {
 		console.log('pagina selecionada', page)
@@ -127,13 +120,13 @@ function Home() {
 							<CheckBox
 								label="Estilo"
 								onCheckChange={(checked) =>
-									handleCheckBoxFilters('name', 'Estilo', checked)
+									handleCheckBoxFilters('Estilo', checked)
 								}
 							/>
 							<CheckBox
 								label="Asteca"
 								onCheckChange={(checked) =>
-									handleCheckBoxFilters('name', 'Asteca', checked)
+									handleCheckBoxFilters('Asteca', checked)
 								}
 							/>
 
